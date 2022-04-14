@@ -33,22 +33,40 @@ const render = function () {
 
     li.querySelector(".todo-complete").addEventListener("click", function () {
       item.completed = !item.completed;
+      localStorage.setItem("toDoData", JSON.stringify(toDoData));
       render();
     });
 
-    let liAll = document.querySelectorAll("li");
+    todoList.addEventListener('click', function(event) {
 
-    for (let i = 0; i < liAll.length; i++) {
-      liAll[i]
-        .querySelector(".todo-remove")
-        .addEventListener("click", function () {
-          liAll[i].remove();
+      let li = event.target.closest('li');
+      let nodes = Array.from( li.closest('ul').children ); // get array
+      let i = nodes.indexOf( li );
 
-          toDoData.splice(i, 1);
-          console.log(i, toDoData);
-          localStorage.setItem("toDoData", JSON.stringify(toDoData));
-        });
-    }
+      if (li) {
+        li.remove();
+      }
+
+      toDoData.splice(i, 1);
+      console.log(i, toDoData);
+      localStorage.setItem("toDoData", JSON.stringify(toDoData));
+    });
+
+    todoCompleted.addEventListener('click', function(event) {
+
+      let li = event.target.closest('li');
+      let nodes = Array.from( li.closest('ul').children ); // get array
+      let i = nodes.indexOf( li );
+
+      if (li) {
+        li.remove();
+      }
+
+      toDoData.splice(i, 1);
+      console.log(i, toDoData);
+      localStorage.setItem("toDoData", JSON.stringify(toDoData));
+    });
+
   });
 };
 
@@ -60,12 +78,6 @@ todoControl.addEventListener("submit", function (event) {
     completed: false,
   };
 
-  /*
-    let toDoData = JSON.parse(window.localStorage.getItem('toDoData'));
-    if (toDoData === null) {
-        toDoData = [];
-    }
-    */
 
   if (newToDo !== "" || newToDo !== null) {
     toDoData.push(newToDo);
@@ -88,32 +100,3 @@ window.onload = function () {
   getToDoData();
   render();
 };
-//console.log(getToDoData());
-//window.addEventListener('load', function() {
-//    if ((localStorage.getItem(toDoData).length === 0) || ( toDoData === null)) {
-//       toDoData.length = 0;
-//       return ;
-//   } else {
-//       toDoData = JSON.parse (localStorage.getItem ("toDoData"));
-//   }
-//});
-
-/*window.onload = function() {
-    
-
-    if ((localStorage.getItem(toDoData) === null || localStorage.getItem(toDoData) === '') && (toDoData.length === '' || toDoData === null)) {
-
-       toDoData.length = 0;
-        return ;
-
-    } else {
-        toDoData = JSON.parse (localStorage.getItem ("toDoData"));
-        console.log(toDoData);
-    }
-};*/
-
-//if ((localStorage.getItem(toDoData) !== null) && ( toDoData !== null)) {
-//   window.onload = function() {
-//       toDoData = JSON.parse (localStorage.getItem ("toDoData"));
-//   };
-//}
