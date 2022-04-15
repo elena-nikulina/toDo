@@ -37,38 +37,44 @@ const render = function () {
       render();
     });
 
-    todoList.addEventListener('click', function(event) {
+    
 
-      let li = event.target.closest('li');
-      let nodes = Array.from( li.closest('ul').children ); // get array
-      let i = nodes.indexOf( li );
-
-      if (li) {
-        li.remove();
-      }
-
-      toDoData.splice(i, 1);
-      console.log(i, toDoData);
-      localStorage.setItem("toDoData", JSON.stringify(toDoData));
-    });
-
-    todoCompleted.addEventListener('click', function(event) {
-
-      let li = event.target.closest('li');
-      let nodes = Array.from( li.closest('ul').children ); // get array
-      let i = nodes.indexOf( li );
-
-      if (li) {
-        li.remove();
-      }
-
-      toDoData.splice(i, 1);
-      console.log(i, toDoData);
-      localStorage.setItem("toDoData", JSON.stringify(toDoData));
-    });
-
+    
   });
 };
+
+todoList.addEventListener("click", function (event) {
+  let btn = event.target.closest(".todo-remove");
+
+  if (btn) {
+    //console.log(btn, btn.closest("ul"));
+    let nodes = Array.from(btn.closest("ul").children); // get array
+    let i = nodes.indexOf(btn);
+    btn.closest('li').remove();
+
+    toDoData.splice(i, 1);
+    console.log(i, toDoData);
+    localStorage.setItem("toDoData", JSON.stringify(toDoData));
+  }
+  
+});
+
+todoCompleted.addEventListener("click", function (event) {
+  let btn = event.target.closest(".todo-remove");
+  
+
+  if (btn) {
+    let nodes = Array.from(btn.closest("ul").children); // get array
+    let i = nodes.indexOf(btn);
+    btn.closest('li').remove();
+
+    toDoData.splice(i, 1);
+    console.log(i, toDoData);
+    localStorage.setItem("toDoData", JSON.stringify(toDoData));
+  }
+  
+  
+});
 
 todoControl.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -77,7 +83,6 @@ todoControl.addEventListener("submit", function (event) {
     text: headerInput.value,
     completed: false,
   };
-
 
   if (newToDo !== "" || newToDo !== null) {
     toDoData.push(newToDo);
